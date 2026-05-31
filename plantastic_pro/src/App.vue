@@ -1,9 +1,8 @@
 <script setup>
-import PlantsView from './views/PlantsView.vue'
 </script>
 
 <template>
-  <PlantsView />
+  <RouterView />
 </template>
 
 <style scoped></style>

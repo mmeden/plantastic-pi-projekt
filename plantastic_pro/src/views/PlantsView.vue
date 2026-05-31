@@ -2,10 +2,8 @@
 
 <script setup>
 import PlantSlikice from '@/components/PlantSlikice.vue'
+import { useBiljkeStore } from '@/stores/biljke'
 
-const biljke = [
-  {
-    id: 1,
     naziv: 'Monstera',
     vrsta: 'Monstera deliciosa',
     status: 'Zdravo',
@@ -13,36 +11,19 @@ const biljke = [
   },
   {
     id: 4,
-    naziv: 'Marantha tricolor',
-    vrsta: 'Spathiphyllum wallisii',
-    status: 'Pazi',
-    slika: 'https://images.unsplash.com/photo-1637967886160-fd78dc3ce3f5?w=400&q=80'
-  },
-  {
-    id: 5,
-    naziv: 'Fikus',
-    vrsta: 'Ficus lyrata',
-    status: 'Zdravo',
-    slika: 'https://images.unsplash.com/photo-1611211232932-da3113c5b960?w=400&q=80'
-  },
-  {
-    id: 6,
-    naziv: 'Aloja vera',
-    vrsta: 'Aloe barbadensis',
-    status: 'Zalijevanje',
-    slika: 'https://images.unsplash.com/photo-1567331711402-509c12c41959?w=400&q=80'
   }
 ]
+const store = useBiljkeStore()
 </script>
 
 <template>
   <div class="plantastic-wrapper">
     <nav class="navbar">
-      <span class="logo">Plantastic</span>
+      <RouterLink to="/" class="logo">Plantastic</RouterLink>
       <div class="nav-links">
-        <a href="#" class="nav-link active">Moje biljke</a>
-        <a href="#" class="nav-link">Evidencija zalijevanja</a>
-        <a href="#" class="nav-link">Dodavanje</a>
+        <RouterLink to="/" class="nav-link">Moje biljke</RouterLink>
+        <RouterLink to="/evidencija" class="nav-link">Evidencija zalijevanja</RouterLink>
+        <RouterLink to="/dodavanje" class="nav-link">Dodavanje</RouterLink>
       </div>
       <div class="nav-avatar">🌿</div>
     </nav>
@@ -55,12 +36,26 @@ const biljke = [
 
       <section class="section">
         <h2 class="section-title">Moje Biljke</h2>
-        <div class="plant-grid">
-          <PlantSlikice
-            v-for="plant in biljke"
+
+        <div v-if="store.mojeBiljke.length === 0" class="prazno">
+          <p>Još nemaš dodanih biljki.</p>
+          <RouterLink to="/dodavanje" class="btn-dodaj-link">+ Dodaj prvu biljku</RouterLink>
+        </div>
+
+        <div class="plant-grid" v-else>
+          <div
+            v-for="plant in store.mojeBiljke"
             :key="plant.id"
-            :plant="plant"
-          />
+            class="card-wrapper"
+          >
+            <button class="btn-ukloni" @click="store.ukloniBiljku(plant.id)" title="Ukloni biljku">✕</button>
+            <RouterLink
+              :to="`/evidencija/${plant.id}`"
+              style="text-decoration:none;"
+            >
+              <PlantSlikice :plant="plant" />
+            </RouterLink>
+          </div>
         </div>
       </section>
     </main>
@@ -88,6 +83,7 @@ const biljke = [
   font-size: 18px;
   font-weight: 700;
   color: #2c2c2a;
+  text-decoration: none;
   letter-spacing: -0.3px;
 }
 
@@ -111,7 +107,7 @@ const biljke = [
   color: #2c2c2a;
 }
 
-.nav-link.active {
+.router-link-active.nav-link {
   color: #2c2c2a;
   font-weight: 500;
 }
