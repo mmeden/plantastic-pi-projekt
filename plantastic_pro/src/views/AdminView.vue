@@ -8,7 +8,6 @@ const router = useRouter()
 const auth = useAuthStore()
 const store = useBiljkeStore()
 
-// Redirect ako nije admin
 if (!auth.jeAdmin) {
   router.push('/')
 }
@@ -19,7 +18,6 @@ const opis = ref('')
 const slika = ref('')
 const greska = ref('')
 const uspjeh = ref('')
-
 const intervalOptions = [2, 3, 5, 7, 10, 14, 21]
 const intervalZalijevanja = ref(7)
 
@@ -48,7 +46,6 @@ function dodajVrstu() {
   }
 
   store.dodajUKatalog(novaBiljka)
-
   uspjeh.value = `"${novaBiljka.naziv}" uspješno dodana u katalog!`
   naziv.value = ''
   vrsta.value = ''
@@ -61,21 +58,21 @@ function dodajVrstu() {
 <template>
   <div class="plantastic-wrapper">
     <nav class="navbar">
-  <RouterLink to="/admin" class="logo">Plantastic</RouterLink>
-  <div class="nav-links">
-    <RouterLink to="/admin" class="nav-link">Admin panel</RouterLink>
-  </div>
-  <div class="nav-desno">
-    <span class="admin-badge">👑 Admin</span>
-    <span class="korisnik-ime">{{ auth.korisnik?.ime }}</span>
-    <button class="btn-odjava" @click="auth.odjava(); router.push('/login')">Odjava</button>
-  </div>
-</nav>
+      <RouterLink to="/admin" class="logo">Plantastic</RouterLink>
+      <div class="nav-links">
+        <RouterLink to="/admin" class="nav-link">Admin panel</RouterLink>
+      </div>
+      <div class="nav-desno">
+        <span class="admin-badge">👑 Admin</span>
+        <span class="korisnik-ime">{{ auth.korisnik?.ime }}</span>
+        <button class="btn-odjava" @click="auth.odjava(); router.push('/login')">Odjava</button>
+      </div>
+    </nav>
 
     <main class="main-content">
       <div class="admin-header">
         <h1 class="naslov">Admin panel</h1>
-        <p class="podnaslov">Dodaj novu vrstu biljke u katalog.</p>
+        <p class="podnaslov">Dodaj ili obriši vrste biljaka iz kataloga.</p>
       </div>
 
       <div class="forma-kartica">
@@ -104,7 +101,7 @@ function dodajVrstu() {
               <input v-model="slika" type="text" class="input" placeholder="https://..." />
             </div>
             <div class="form-group">
-              <label class="label">Interval zalijevanja (dani) *</label>
+              <label class="label">Interval zalijevanja *</label>
               <select v-model="intervalZalijevanja" class="input">
                 <option v-for="opt in intervalOptions" :key="opt" :value="opt">Svakih {{ opt }} dana</option>
               </select>
@@ -123,7 +120,7 @@ function dodajVrstu() {
         </div>
       </div>
 
-      <div class="katalog-section" v-if="store.katalog.length > 0">
+      <div class="katalog-section">
         <h2 class="forma-naslov">Trenutni katalog ({{ store.katalog.length }} vrsta)</h2>
         <div class="katalog-lista">
           <div v-for="b in store.katalog" :key="b.id" class="katalog-unos">
@@ -133,6 +130,7 @@ function dodajVrstu() {
               <p class="katalog-vrsta">{{ b.vrsta }}</p>
             </div>
             <span class="katalog-interval">💧 {{ b.intervalZalijevanja ?? 7 }}d</span>
+            <button class="btn-brisi" @click="store.obrisiIzKataloga(b.id)">🗑 Obriši</button>
           </div>
         </div>
       </div>
@@ -180,13 +178,21 @@ function dodajVrstu() {
 }
 
 .nav-link:hover { background: #f5f0ea; color: #2c2c2a; }
-
 .router-link-active.nav-link { color: #2c2c2a; font-weight: 500; }
 
 .nav-desno {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.admin-badge {
+  font-size: 12px;
+  background: #1e3a2f;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 500;
 }
 
 .korisnik-ime {
@@ -213,9 +219,7 @@ function dodajVrstu() {
   padding: 40px 24px;
 }
 
-.admin-header {
-  margin-bottom: 28px;
-}
+.admin-header { margin-bottom: 28px; }
 
 .naslov {
   font-size: 26px;
@@ -282,7 +286,6 @@ function dodajVrstu() {
 }
 
 .input:focus { border-color: #1e3a2f; }
-
 .textarea { resize: vertical; min-height: 80px; }
 
 .preview { margin-top: 4px; }
@@ -383,12 +386,17 @@ function dodajVrstu() {
   padding: 4px 10px;
   border-radius: 20px;
 }
-.admin-badge {
+
+.btn-brisi {
   font-size: 12px;
-  background: #1e3a2f;
-  color: #fff;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: 500;
+  padding: 6px 12px;
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
 }
+
+.btn-brisi:hover { background: #fecaca; }
 </style>

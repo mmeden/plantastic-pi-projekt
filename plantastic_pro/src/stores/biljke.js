@@ -64,6 +64,10 @@ export const useBiljkeStore = defineStore('biljke', () => {
     mojeBiljke.value = mojeBiljke.value.filter(b => b.id !== id)
   }
 
+  function obrisiIzKataloga(id) {
+  katalog.value = katalog.value.filter(b => b.id !== id)
+  }
+
   function evidentirajZalijevanje(biljkaId) {
     const sada = new Date()
     const formatiran = sada.toLocaleString('hr-HR', {
@@ -108,6 +112,7 @@ export const useBiljkeStore = defineStore('biljke', () => {
     dodajUKatalog,
     dodajBiljku,
     ukloniBiljku,
+    obrisiIzKataloga,
     evidentirajZalijevanje,
     getPovijest,
     getDaniDoZalijevanja,

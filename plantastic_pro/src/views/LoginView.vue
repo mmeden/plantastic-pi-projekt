@@ -6,7 +6,7 @@ import { useAuthStore } from '@/stores/auth'
 const router = useRouter()
 const auth = useAuthStore()
 
-const nacin = ref('prijava') // 'prijava' ili 'registracija'
+const nacin = ref('prijava')
 const ime = ref('')
 const email = ref('')
 const lozinka = ref('')
@@ -43,15 +43,13 @@ function validiraj() {
 async function submit() {
   greska.value = ''
   if (!validiraj()) return
-
   ucitavanje.value = true
-  await new Promise(r => setTimeout(r, 400)) // fake delay
 
   let rezultat
   if (nacin.value === 'prijava') {
-    rezultat = auth.prijava(email.value, lozinka.value)
+    rezultat = await auth.prijava(email.value, lozinka.value)
   } else {
-    rezultat = auth.registracija(ime.value, email.value, lozinka.value)
+    rezultat = await auth.registracija(ime.value, email.value, lozinka.value)
   }
 
   ucitavanje.value = false
@@ -61,6 +59,12 @@ async function submit() {
   } else {
     greska.value = rezultat.greska
   }
+}
+
+async function googlePrijava() {
+  const rezultat = await auth.prijavaGoogleom()
+  if (rezultat.uspjeh) router.push('/')
+  else greska.value = rezultat.greska
 }
 
 function promijeniNacin(novi) {
@@ -87,6 +91,9 @@ function promijeniNacin(novi) {
           :class="{ active: nacin === 'prijava' }"
           @click="promijeniNacin('prijava')"
         >Prijava</button>
+        <button class="btn-google" @click="googlePrijava" type="button">
+  <span>G</span> Prijavi se s Googleom
+</button>
         <button
           class="tab"
           :class="{ active: nacin === 'registracija' }"
@@ -289,5 +296,25 @@ function promijeniNacin(novi) {
   color: #888780;
   text-align: center;
   margin: 0;
+}
+
+.btn-google {
+  width: 100%;
+  padding: 12px;
+  background: #fff;
+  color: #2c2c2a;
+  border: 1px solid #e8e0d8;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-google:hover {
+  background: #f5f0ea;
 }
 </style>
