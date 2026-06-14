@@ -91,9 +91,6 @@ function promijeniNacin(novi) {
           :class="{ active: nacin === 'prijava' }"
           @click="promijeniNacin('prijava')"
         >Prijava</button>
-        <button class="btn-google" @click="googlePrijava" type="button">
-  <span>G</span> Prijavi se s Googleom
-</button>
         <button
           class="tab"
           :class="{ active: nacin === 'registracija' }"
@@ -104,46 +101,22 @@ function promijeniNacin(novi) {
       <div class="form">
         <div v-if="nacin === 'registracija'" class="form-group">
           <label class="label">Ime</label>
-          <input
-            v-model="ime"
-            type="text"
-            class="input"
-            placeholder="Vaše ime"
-            @keyup.enter="submit"
-          />
+          <input v-model="ime" type="text" class="input" placeholder="Vaše ime" @keyup.enter="submit" />
         </div>
 
         <div class="form-group">
           <label class="label">Email</label>
-          <input
-            v-model="email"
-            type="email"
-            class="input"
-            placeholder="email@primjer.com"
-            @keyup.enter="submit"
-          />
+          <input v-model="email" type="email" class="input" placeholder="email@primjer.com" @keyup.enter="submit" />
         </div>
 
         <div class="form-group">
           <label class="label">Lozinka</label>
-          <input
-            v-model="lozinka"
-            type="password"
-            class="input"
-            placeholder="Najmanje 6 znakova"
-            @keyup.enter="submit"
-          />
+          <input v-model="lozinka" type="password" class="input" placeholder="Najmanje 6 znakova" @keyup.enter="submit" />
         </div>
 
         <div v-if="nacin === 'registracija'" class="form-group">
           <label class="label">Potvrda lozinke</label>
-          <input
-            v-model="potvrdaLozinke"
-            type="password"
-            class="input"
-            placeholder="Ponovite lozinku"
-            @keyup.enter="submit"
-          />
+          <input v-model="potvrdaLozinke" type="password" class="input" placeholder="Ponovite lozinku" @keyup.enter="submit" />
         </div>
 
         <p v-if="greska" class="greska">{{ greska }}</p>
@@ -153,9 +126,17 @@ function promijeniNacin(novi) {
           <span v-else>{{ nacin === 'prijava' ? 'Prijavi se' : 'Registriraj se' }}</span>
         </button>
 
+        <button class="btn-google" @click="googlePrijava" type="button">
+          <span>G</span> Prijavi se s Googleom
+        </button>
+
+        
         <p class="hint" v-if="nacin === 'prijava'">
-          Admin pristup: <strong>admin@plantastic.com</strong> / <strong>admin123</strong>
-        </p>
+  Admin pristup: <strong>admin@plantastic.com</strong> / <strong>admin123</strong>
+</p>
+<p class="hint" v-if="nacin === 'prijava'">
+  Korisnik: <strong>korisnik@plantastic.com</strong> / <strong>korisnik123</strong>
+</p>
       </div>
     </div>
   </div>
@@ -217,7 +198,6 @@ function promijeniNacin(novi) {
   font-weight: 500;
   color: #888780;
   cursor: pointer;
-  transition: all 0.2s;
 }
 
 .tab.active {
@@ -252,7 +232,6 @@ function promijeniNacin(novi) {
   color: #2c2c2a;
   background: #fff;
   outline: none;
-  transition: border-color 0.15s;
 }
 
 .input:focus {
@@ -278,8 +257,6 @@ function promijeniNacin(novi) {
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
-  margin-top: 4px;
 }
 
 .btn-submit:hover:not(:disabled) {
@@ -291,13 +268,6 @@ function promijeniNacin(novi) {
   cursor: default;
 }
 
-.hint {
-  font-size: 12px;
-  color: #888780;
-  text-align: center;
-  margin: 0;
-}
-
 .btn-google {
   width: 100%;
   padding: 12px;
@@ -306,15 +276,21 @@ function promijeniNacin(novi) {
   border: 1px solid #e8e0d8;
   border-radius: 10px;
   font-size: 15px;
-  font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
 }
+
 .btn-google:hover {
   background: #f5f0ea;
+}
+
+.hint {
+  font-size: 12px;
+  color: #888780;
+  text-align: center;
+  margin: 0;
 }
 </style>

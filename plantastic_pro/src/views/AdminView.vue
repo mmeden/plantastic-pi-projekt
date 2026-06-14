@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useBiljkeStore } from '@/stores/biljke'
+import NavBar from '@/components/NavBar.vue'
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -56,61 +57,51 @@ function dodajVrstu() {
 </script>
 
 <template>
-  <div class="plantastic-wrapper">
-    <nav class="navbar">
-      <RouterLink to="/admin" class="logo">Plantastic</RouterLink>
-      <div class="nav-links">
-        <RouterLink to="/admin" class="nav-link">Admin panel</RouterLink>
-      </div>
-      <div class="nav-desno">
-        <span class="admin-badge">👑 Admin</span>
-        <span class="korisnik-ime">{{ auth.korisnik?.ime }}</span>
-        <button class="btn-odjava" @click="auth.odjava(); router.push('/login')">Odjava</button>
-      </div>
-    </nav>
+  <div class="stranica">
+    <NavBar />
 
-    <main class="main-content">
-      <div class="admin-header">
-        <h1 class="naslov">Admin panel</h1>
-        <p class="podnaslov">Dodaj ili obriši vrste biljaka iz kataloga.</p>
+    <main class="sadrzaj">
+      <div class="zaglavlje">
+        <h1>Admin panel</h1>
+        <p>Dodaj ili obriši vrste biljaka iz kataloga.</p>
       </div>
 
       <div class="forma-kartica">
-        <h2 class="forma-naslov">Nova vrsta biljke</h2>
+        <h2>Nova vrsta biljke</h2>
 
-        <div class="form">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="label">Naziv biljke *</label>
+        <div class="forma">
+          <div class="red">
+            <div class="grupa">
+              <label>Naziv biljke *</label>
               <input v-model="naziv" type="text" class="input" placeholder="npr. Monstera" />
             </div>
-            <div class="form-group">
-              <label class="label">Latinska vrsta *</label>
+            <div class="grupa">
+              <label>Latinska vrsta *</label>
               <input v-model="vrsta" type="text" class="input" placeholder="npr. Monstera deliciosa" />
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="label">Opis *</label>
-            <textarea v-model="opis" class="input textarea" placeholder="Kratki opis biljke..." rows="3"></textarea>
+          <div class="grupa">
+            <label>Opis *</label>
+            <textarea v-model="opis" class="input" placeholder="Kratki opis biljke..." rows="3"></textarea>
           </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label class="label">URL slike *</label>
+          <div class="red">
+            <div class="grupa">
+              <label>URL slike *</label>
               <input v-model="slika" type="text" class="input" placeholder="https://..." />
             </div>
-            <div class="form-group">
-              <label class="label">Interval zalijevanja *</label>
+            <div class="grupa">
+              <label>Interval zalijevanja *</label>
               <select v-model="intervalZalijevanja" class="input">
                 <option v-for="opt in intervalOptions" :key="opt" :value="opt">Svakih {{ opt }} dana</option>
               </select>
             </div>
           </div>
 
-          <div v-if="slika" class="preview">
-            <p class="preview-label">Pregled slike:</p>
-            <img :src="slika" class="preview-slika" @error="greska = 'Slika nije dostupna na tom URL-u.'" />
+          <div v-if="slika" class="pregled">
+            <p>Pregled slike:</p>
+            <img :src="slika" class="pregled-slika" />
           </div>
 
           <p v-if="greska" class="greska">{{ greska }}</p>
@@ -120,17 +111,17 @@ function dodajVrstu() {
         </div>
       </div>
 
-      <div class="katalog-section">
-        <h2 class="forma-naslov">Trenutni katalog ({{ store.katalog.length }} vrsta)</h2>
-        <div class="katalog-lista">
-          <div v-for="b in store.katalog" :key="b.id" class="katalog-unos">
-            <img :src="b.slika" :alt="b.naziv" class="katalog-slika" />
-            <div class="katalog-info">
-              <p class="katalog-naziv">{{ b.naziv }}</p>
-              <p class="katalog-vrsta">{{ b.vrsta }}</p>
+      <div class="katalog-dio">
+        <h2>Trenutni katalog ({{ store.katalog.length }} vrsta)</h2>
+        <div class="lista">
+          <div v-for="b in store.katalog" :key="b.id" class="unos">
+            <img :src="b.slika" :alt="b.naziv" class="unos-slika" />
+            <div class="unos-info">
+              <p class="unos-naziv">{{ b.naziv }}</p>
+              <p class="unos-vrsta">{{ b.vrsta }}</p>
             </div>
-            <span class="katalog-interval">💧 {{ b.intervalZalijevanja ?? 7 }}d</span>
-            <button class="btn-brisi" @click="store.obrisiIzKataloga(b.id)">🗑 Obriši</button>
+            <span class="unos-interval">💧 {{ b.intervalZalijevanja ?? 7 }}d</span>
+            <button class="btn-brisi" @click="store.obrisiIzKataloga(b.id)">Obriši</button>
           </div>
         </div>
       </div>
@@ -139,96 +130,30 @@ function dodajVrstu() {
 </template>
 
 <style scoped>
-.plantastic-wrapper {
+.stranica {
   min-height: 100vh;
   background: #faf8f5;
   font-family: sans-serif;
 }
 
-.navbar {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  padding: 0 32px;
-  height: 56px;
-  background: #fff;
-  border-bottom: 1px solid #e8e0d8;
-}
-
-.logo {
-  font-size: 18px;
-  font-weight: 700;
-  color: #2c2c2a;
-  text-decoration: none;
-}
-
-.nav-links {
-  display: flex;
-  gap: 8px;
-  flex: 1;
-}
-
-.nav-link {
-  font-size: 14px;
-  color: #888780;
-  text-decoration: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  transition: background 0.15s, color 0.15s;
-}
-
-.nav-link:hover { background: #f5f0ea; color: #2c2c2a; }
-.router-link-active.nav-link { color: #2c2c2a; font-weight: 500; }
-
-.nav-desno {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.admin-badge {
-  font-size: 12px;
-  background: #1e3a2f;
-  color: #fff;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: 500;
-}
-
-.korisnik-ime {
-  font-size: 13px;
-  color: #5f5e5a;
-}
-
-.btn-odjava {
-  font-size: 13px;
-  padding: 6px 12px;
-  border: 1px solid #e8e0d8;
-  border-radius: 6px;
-  background: #fff;
-  color: #2c2c2a;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.btn-odjava:hover { background: #f5f0ea; }
-
-.main-content {
+.sadrzaj {
   max-width: 860px;
   margin: 0 auto;
   padding: 40px 24px;
 }
 
-.admin-header { margin-bottom: 28px; }
+.zaglavlje {
+  margin-bottom: 28px;
+}
 
-.naslov {
+.zaglavlje h1 {
   font-size: 26px;
   font-weight: 700;
   color: #2c2c2a;
   margin: 0 0 6px;
 }
 
-.podnaslov {
+.zaglavlje p {
   font-size: 14px;
   color: #888780;
   margin: 0;
@@ -242,32 +167,32 @@ function dodajVrstu() {
   margin-bottom: 32px;
 }
 
-.forma-naslov {
+.forma-kartica h2 {
   font-size: 17px;
   font-weight: 600;
   color: #2c2c2a;
   margin: 0 0 24px;
 }
 
-.form {
+.forma {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.form-row {
+.red {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
 
-.form-group {
+.grupa {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.label {
+.grupa label {
   font-size: 13px;
   font-weight: 500;
   color: #2c2c2a;
@@ -281,22 +206,19 @@ function dodajVrstu() {
   color: #2c2c2a;
   background: #fff;
   outline: none;
-  transition: border-color 0.15s;
   font-family: sans-serif;
+  resize: vertical;
 }
 
 .input:focus { border-color: #1e3a2f; }
-.textarea { resize: vertical; min-height: 80px; }
 
-.preview { margin-top: 4px; }
-
-.preview-label {
+.pregled p {
   font-size: 12px;
   color: #888780;
   margin: 0 0 8px;
 }
 
-.preview-slika {
+.pregled-slika {
   width: 120px;
   height: 90px;
   object-fit: cover;
@@ -330,23 +252,25 @@ function dodajVrstu() {
   border: none;
   border-radius: 10px;
   font-size: 15px;
-  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
 .btn-dodaj:hover { background: #2a4f40; }
 
-.katalog-section { margin-top: 8px; }
+.katalog-dio h2 {
+  font-size: 17px;
+  font-weight: 600;
+  color: #2c2c2a;
+  margin: 0 0 16px;
+}
 
-.katalog-lista {
+.lista {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 16px;
 }
 
-.katalog-unos {
+.unos {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -356,7 +280,7 @@ function dodajVrstu() {
   padding: 12px 16px;
 }
 
-.katalog-slika {
+.unos-slika {
   width: 48px;
   height: 48px;
   object-fit: cover;
@@ -364,22 +288,22 @@ function dodajVrstu() {
   flex-shrink: 0;
 }
 
-.katalog-info { flex: 1; }
+.unos-info { flex: 1; }
 
-.katalog-naziv {
+.unos-naziv {
   font-size: 14px;
   font-weight: 600;
   color: #2c2c2a;
   margin: 0 0 2px;
 }
 
-.katalog-vrsta {
+.unos-vrsta {
   font-size: 12px;
   color: #888780;
   margin: 0;
 }
 
-.katalog-interval {
+.unos-interval {
   font-size: 12px;
   color: #5f5e5a;
   background: #f5f0ea;
@@ -395,7 +319,6 @@ function dodajVrstu() {
   border: 1px solid #fca5a5;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.15s;
 }
 
 .btn-brisi:hover { background: #fecaca; }

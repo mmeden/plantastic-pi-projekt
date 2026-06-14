@@ -1,59 +1,34 @@
-
-
 <script setup>
 import PlantSlikice from '@/components/PlantSlikice.vue'
+import NavBar from '@/components/NavBar.vue'
 import { useBiljkeStore } from '@/stores/biljke'
 
-    naziv: 'Monstera',
-    vrsta: 'Monstera deliciosa',
-    status: 'Zdravo',
-    slika: 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=400&q=80'
-  },
-  {
-    id: 4,
-  }
-]
 const store = useBiljkeStore()
 </script>
 
 <template>
-  <div class="plantastic-wrapper">
-    <nav class="navbar">
-      <RouterLink to="/" class="logo">Plantastic</RouterLink>
-      <div class="nav-links">
-        <RouterLink to="/" class="nav-link">Moje biljke</RouterLink>
-        <RouterLink to="/evidencija" class="nav-link">Evidencija zalijevanja</RouterLink>
-        <RouterLink to="/dodavanje" class="nav-link">Dodavanje</RouterLink>
-      </div>
-      <div class="nav-avatar">🌿</div>
-    </nav>
+  <div class="stranica">
+    <NavBar />
 
-    <main class="main-content">
-      <div class="hero-text">
+    <main class="sadrzaj">
+      <div class="uvod">
         <h1>Dobrodošli u Plantastic!</h1>
         <p>Brinite se o svojim biljkama na jednom mjestu.</p>
       </div>
 
-      <section class="section">
-        <h2 class="section-title">Moje Biljke</h2>
+      <section>
+        <h2 class="naslov-sekcije">Moje Biljke</h2>
 
         <div v-if="store.mojeBiljke.length === 0" class="prazno">
           <p>Još nemaš dodanih biljki.</p>
-          <RouterLink to="/dodavanje" class="btn-dodaj-link">+ Dodaj prvu biljku</RouterLink>
+          <RouterLink to="/dodavanje" class="btn-dodaj">+ Dodaj prvu biljku</RouterLink>
         </div>
 
-        <div class="plant-grid" v-else>
-          <div
-            v-for="plant in store.mojeBiljke"
-            :key="plant.id"
-            class="card-wrapper"
-          >
-            <button class="btn-ukloni" @click="store.ukloniBiljku(plant.id)" title="Ukloni biljku">✕</button>
-            <RouterLink
-              :to="`/evidencija/${plant.id}`"
-              style="text-decoration:none;"
-            >
-              <PlantSlikice :plant="plant" />
+        <div class="grid" v-else>
+          <div v-for="biljka in store.mojeBiljke" :key="biljka.id" class="kartica-wrapper">
+            <button class="btn-ukloni" @click="store.ukloniBiljku(biljka.id)">✕</button>
+            <RouterLink :to="`/biljka/${biljka.id}`" style="text-decoration:none;">
+              <PlantSlikice :plant="biljka" />
             </RouterLink>
           </div>
         </div>
@@ -63,92 +38,88 @@ const store = useBiljkeStore()
 </template>
 
 <style scoped>
-.plantastic-wrapper {
+.stranica {
   min-height: 100vh;
   background: #faf8f5;
   font-family: sans-serif;
 }
 
-.navbar {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  padding: 0 32px;
-  height: 56px;
-  background: #fff;
-  border-bottom: 1px solid #e8e0d8;
-}
-
-.logo {
-  font-size: 18px;
-  font-weight: 700;
-  color: #2c2c2a;
-  text-decoration: none;
-  letter-spacing: -0.3px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 8px;
-  flex: 1;
-}
-
-.nav-link {
-  font-size: 14px;
-  color: #888780;
-  text-decoration: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  transition: background 0.15s, color 0.15s;
-}
-
-.nav-link:hover {
-  background: #f5f0ea;
-  color: #2c2c2a;
-}
-
-.router-link-active.nav-link {
-  color: #2c2c2a;
-  font-weight: 500;
-}
-
-.nav-avatar {
-  font-size: 20px;
-}
-
-.main-content {
+.sadrzaj {
   max-width: 960px;
   margin: 0 auto;
   padding: 40px 24px;
 }
 
-.hero-text {
+.uvod {
   margin-bottom: 36px;
 }
 
-.hero-text h1 {
+.uvod h1 {
   font-size: 26px;
   font-weight: 700;
   color: #2c2c2a;
   margin: 0 0 6px;
 }
 
-.hero-text p {
+.uvod p {
   font-size: 14px;
   color: #888780;
   margin: 0;
 }
 
-.section-title {
+.naslov-sekcije {
   font-size: 16px;
   font-weight: 600;
   color: #2c2c2a;
   margin: 0 0 20px;
 }
 
-.plant-grid {
+.grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
+}
+
+.kartica-wrapper {
+  position: relative;
+}
+
+.btn-ukloni {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  background: #fff;
+  border: 1px solid #e8e0d8;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #888780;
+}
+
+.btn-ukloni:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.prazno {
+  text-align: center;
+  padding: 60px 0;
+  color: #888780;
+}
+
+.prazno p {
+  margin: 0 0 16px;
+}
+
+.btn-dodaj {
+  background: #1e3a2f;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
 }
 </style>
