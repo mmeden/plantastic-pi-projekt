@@ -6,9 +6,6 @@ Web aplikacija za praćenje njege sobnih biljaka.
 
 ## Tim
 
-| Ime i prezime | GitHub |
-|---|---|
-| Mia | [@mia](https://github.com) |
 
 ---
 
@@ -55,19 +52,6 @@ Plantastic je web aplikacija namijenjena ljubiteljima sobnih biljaka koji žele 
 
 > Link na prototip: _u izradi_
 
----
-
-## Zaduženja
-
-### Mia
-
-- Dizajn i implementacija korisničkog sučelja (sve Vue komponente i view-ovi)
-- Postavljanje Vue Router-a i zaštita ruta
-- Implementacija Pinia store-ova (`biljke.js`, `auth.js`)
-- Integracija Firebase Authentication (email/lozinka, Google prijava)
-- Implementacija logike zalijevanja i automatskog izračuna statusa
-- Admin panel (dodavanje, uređivanje, brisanje vrsta biljaka)
-- Postavljanje Firebase projekta
 
 ---
 
