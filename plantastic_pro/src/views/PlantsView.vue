@@ -25,7 +25,7 @@ const store = useBiljkeStore()
         </div>
 
         <div class="grid" v-else>
-          <div v-for="biljka in store.mojeBiljke" :key="biljka.id" class="kartica-wrapper">
+          <div v-for="biljka in [...store.mojeBiljke].sort((a, b) => a.naziv.localeCompare(b.naziv))" :key="biljka.id" class="kartica-wrapper">
             <button class="btn-ukloni" @click="store.ukloniBiljku(biljka.id)">✕</button>
             <RouterLink :to="`/biljka/${biljka.id}`" style="text-decoration:none;">
               <PlantSlikice :plant="biljka" />
@@ -38,18 +38,6 @@ const store = useBiljkeStore()
 </template>
 
 <style scoped>
-.stranica {
-  min-height: 100vh;
-  background: #faf8f5;
-  font-family: sans-serif;
-}
-
-.sadrzaj {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 40px 24px;
-}
-
 .uvod {
   margin-bottom: 36px;
 }
@@ -72,12 +60,6 @@ const store = useBiljkeStore()
   font-weight: 600;
   color: #2c2c2a;
   margin: 0 0 20px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
 }
 
 .kartica-wrapper {
@@ -104,12 +86,6 @@ const store = useBiljkeStore()
   color: #dc2626;
 }
 
-.prazno {
-  text-align: center;
-  padding: 60px 0;
-  color: #888780;
-}
-
 .prazno p {
   margin: 0 0 16px;
 }
@@ -121,5 +97,11 @@ const store = useBiljkeStore()
   padding: 10px 20px;
   border-radius: 8px;
   font-size: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
 }
 </style>

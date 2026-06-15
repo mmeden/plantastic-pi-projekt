@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useBiljkeStore } from '@/stores/biljke'
@@ -21,6 +21,11 @@ const greska = ref('')
 const uspjeh = ref('')
 const intervalOptions = [2, 3, 5, 7, 10, 14, 21]
 const intervalZalijevanja = ref(7)
+const uredivanje = ref(null)
+
+const katalogSortiran = computed(() => {
+  return [...store.katalog].sort((a, b) => a.naziv.localeCompare(b.naziv))
+})
 
 function validiraj() {
   if (!naziv.value.trim()) { greska.value = 'Unesite naziv biljke.'; return false }
@@ -53,6 +58,17 @@ function dodajVrstu() {
   opis.value = ''
   slika.value = ''
   intervalZalijevanja.value = 7
+}
+
+function otvoriUredivanje(b) {
+  uredivanje.value = { ...b }
+}
+
+function spremiUredivanje() {
+  if (!uredivanje.value) return
+  const idx = store.katalog.findIndex(b => b.id === uredivanje.value.id)
+  if (idx !== -1) store.katalog[idx] = { ...uredivanje.value }
+  uredivanje.value = null
 }
 </script>
 
@@ -114,34 +130,55 @@ function dodajVrstu() {
       <div class="katalog-dio">
         <h2>Trenutni katalog ({{ store.katalog.length }} vrsta)</h2>
         <div class="lista">
-          <div v-for="b in store.katalog" :key="b.id" class="unos">
+          <div v-for="b in katalogSortiran" :key="b.id" class="unos">
             <img :src="b.slika" :alt="b.naziv" class="unos-slika" />
             <div class="unos-info">
               <p class="unos-naziv">{{ b.naziv }}</p>
               <p class="unos-vrsta">{{ b.vrsta }}</p>
             </div>
             <span class="unos-interval">💧 {{ b.intervalZalijevanja ?? 7 }}d</span>
+            <button class="btn-uredi" @click="otvoriUredivanje(b)">Uredi</button>
             <button class="btn-brisi" @click="store.obrisiIzKataloga(b.id)">Obriši</button>
           </div>
         </div>
       </div>
     </main>
+
+    <div v-if="uredivanje" class="modal-overlay" @click.self="uredivanje = null">
+      <div class="modal">
+        <h2>Uredi biljku</h2>
+        <div class="forma">
+          <div class="grupa">
+            <label>Naziv</label>
+            <input v-model="uredivanje.naziv" class="input" />
+          </div>
+          <div class="grupa">
+            <label>Latinska vrsta</label>
+            <input v-model="uredivanje.vrsta" class="input" />
+          </div>
+          <div class="grupa">
+            <label>Opis</label>
+            <textarea v-model="uredivanje.opis" class="input" rows="3"></textarea>
+          </div>
+          <div class="grupa">
+            <label>URL slike</label>
+            <input v-model="uredivanje.slika" class="input" />
+          </div>
+          <div class="grupa">
+            <label>Interval zalijevanja</label>
+            <select v-model="uredivanje.intervalZalijevanja" class="input">
+              <option v-for="opt in intervalOptions" :key="opt" :value="opt">Svakih {{ opt }} dana</option>
+            </select>
+          </div>
+          <button class="btn-dodaj" @click="spremiUredivanje">Spremi</button>
+          <button class="btn-odustani" @click="uredivanje = null">Odustani</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.stranica {
-  min-height: 100vh;
-  background: #faf8f5;
-  font-family: sans-serif;
-}
-
-.sadrzaj {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 40px 24px;
-}
-
 .zaglavlje {
   margin-bottom: 28px;
 }
@@ -226,24 +263,6 @@ function dodajVrstu() {
   border: 1px solid #e8e0d8;
 }
 
-.greska {
-  background: #fee2e2;
-  color: #dc2626;
-  font-size: 13px;
-  padding: 10px 14px;
-  border-radius: 8px;
-  margin: 0;
-}
-
-.uspjeh {
-  background: #eaf3de;
-  color: #3b6d11;
-  font-size: 13px;
-  padding: 10px 14px;
-  border-radius: 8px;
-  margin: 0;
-}
-
 .btn-dodaj {
   width: 100%;
   padding: 12px;
@@ -256,6 +275,20 @@ function dodajVrstu() {
 }
 
 .btn-dodaj:hover { background: #2a4f40; }
+
+.btn-odustani {
+  width: 100%;
+  padding: 12px;
+  background: #fff;
+  color: #2c2c2a;
+  border: 1px solid #e8e0d8;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.btn-odustani:hover { background: #f5f0ea; }
 
 .katalog-dio h2 {
   font-size: 17px;
@@ -311,6 +344,18 @@ function dodajVrstu() {
   border-radius: 20px;
 }
 
+.btn-uredi {
+  font-size: 12px;
+  padding: 6px 12px;
+  background: #e6f1fb;
+  color: #185fa5;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-uredi:hover { background: #bfdbfe; }
+
 .btn-brisi {
   font-size: 12px;
   padding: 6px 12px;
@@ -322,4 +367,32 @@ function dodajVrstu() {
 }
 
 .btn-brisi:hover { background: #fecaca; }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal h2 {
+  font-size: 17px;
+  font-weight: 600;
+  color: #2c2c2a;
+  margin: 0;
+}
 </style>
