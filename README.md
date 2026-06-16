@@ -2,9 +2,8 @@
 
 Web aplikacija za praćenje njege sobnih biljaka.
 
----
 
-## Tim
+## Izradila: Mia Meden
 
 
 ---
@@ -37,14 +36,12 @@ Plantastic je web aplikacija namijenjena ljubiteljima sobnih biljaka koji žele 
 - Pregled povijesti zalijevanja
 - Admin panel za dodavanje, uređivanje i brisanje vrsta biljaka iz kataloga
 
-**Tehnologije:**
-
-- Vue 3 (Composition API)
-- Vue Router 5
-- Pinia (state management)
-- Firebase Authentication
-- localStorage (pohrana podataka)
-- Vite
+## Za izradu projekta sam koristila:
+- Vue 3 – frontend framework
+- Pinia – state management
+- Vue Router – navigacija između stranica
+- Firebase Auth – autentikacija korisnika (email/password i Google auth)
+- Firebase Firestore – pohrana korisničkih podataka
 
 ---
 
@@ -52,6 +49,10 @@ Plantastic je web aplikacija namijenjena ljubiteljima sobnih biljaka koji žele 
 
 > Link na prototip: _u izradi_
 
+---
+
+
+> [Figma prototip]([https://www.figma.com/...](https://www.figma.com/proto/iAQlVu0UJCX808nikHsdcE/Untitled?node-id=0-3&p=f&t=x8kHfypeojxYHiNn-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=0%3A176))
 
 ---
 
