@@ -8,11 +8,9 @@ Web aplikacija za praćenje njege sobnih biljaka.
 
 ---
 
-## Fakultet
-
 [Fakultet informatike u Puli](https://fipu.unipu.hr/)
 
-## Kolegij
+# Kolegij
 
 [Programsko inženjerstvo](http://ntankovic.unipu.hr/pi)
 
