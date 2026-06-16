@@ -10,6 +10,7 @@ const router = createRouter({
     { path: '/evidencija/:id', component: () => import('@/views/EvidencijaView.vue'), meta: { zahtijevaPrijavu: true, samKorisnik: true } },
     { path: '/dodavanje', component: () => import('@/views/DodavanjeView.vue'), meta: { zahtijevaPrijavu: true, samKorisnik: true } },
     { path: '/admin', component: () => import('@/views/AdminView.vue'), meta: { zahtijevaPrijavu: true, zahtijevaAdmin: true } },
+    { path: '/biljka/:id', component: () => import('@/views/BiljkaView.vue'), meta: { zahtijevaPrijavu: true, samKorisnik: true } },
   ]
 })
 

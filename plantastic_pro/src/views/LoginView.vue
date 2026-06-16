@@ -149,7 +149,6 @@ function promijeniNacin(novi) {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: sans-serif;
   padding: 24px;
 }
 
@@ -236,15 +235,6 @@ function promijeniNacin(novi) {
 
 .input:focus {
   border-color: #1e3a2f;
-}
-
-.greska {
-  background: #fee2e2;
-  color: #dc2626;
-  font-size: 13px;
-  padding: 10px 14px;
-  border-radius: 8px;
-  margin: 0;
 }
 
 .btn-submit {

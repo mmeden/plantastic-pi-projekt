@@ -25,17 +25,17 @@ const status = computed(() => biljka.value ? store.getStatusZalijevanja(biljka.v
         </div>
 
         <div class="desno">
-          <div class="info">
-            <h1>{{ biljka.naziv }}</h1>
-            <p class="vrsta">{{ biljka.vrsta }}</p>
-            <p class="opis">{{ biljka.opis }}</p>
-          </div>
+  <div class="info">
+    <h1>{{ biljka.naziv }}</h1>
+    <p class="vrsta">{{ biljka.vrsta }}</p>
+    <p class="opis">{{ biljka.opis }}</p>
+  </div>
 
-          <div class="status-box">
-            <p>Status zalijevanja</p>
-            <span class="status-badge" :class="status.klasa">💧 {{ status.tekst }}</span>
-          </div>
-        </div>
+  <div class="status-box">
+    <p>Status zalijevanja</p>
+    <span class="status-badge" :class="status.klasa">💧 {{ status.tekst }}</span>
+  </div>
+</div>
       </div>
     </main>
 
@@ -46,18 +46,6 @@ const status = computed(() => biljka.value ? store.getStatusZalijevanja(biljka.v
 </template>
 
 <style scoped>
-.stranica {
-  min-height: 100vh;
-  background: #faf8f5;
-  font-family: sans-serif;
-}
-
-.sadrzaj {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 40px 24px;
-}
-
 .btn-nazad {
   background: none;
   border: none;
@@ -74,13 +62,16 @@ const status = computed(() => biljka.value ? store.getStatusZalijevanja(biljka.v
   display: grid;
   grid-template-columns: 1fr 1.4fr;
   gap: 24px;
+  align-items: start;
 }
 
 .slika-wrapper {
   border-radius: 16px;
   overflow: hidden;
   background: #f0ebe3;
-  min-height: 420px;
+  height: 500px;
+  position: sticky;
+  top: 20px;
 }
 
 .slika {
@@ -99,12 +90,13 @@ const status = computed(() => biljka.value ? store.getStatusZalijevanja(biljka.v
 .info {
   background: #f5f2ed;
   border-radius: 16px;
-  padding: 36px 32px;
-  flex: 1;
+  padding: 32px;
+  max-height: 380px;
+  overflow-y: auto;
 }
 
 .info h1 {
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 400;
   color: #2c2c2a;
   margin: 0 0 6px;
@@ -113,7 +105,7 @@ const status = computed(() => biljka.value ? store.getStatusZalijevanja(biljka.v
 .vrsta {
   font-size: 14px;
   color: #888780;
-  margin: 0 0 20px;
+  margin: 0 0 16px;
   font-style: italic;
 }
 
@@ -131,6 +123,7 @@ const status = computed(() => biljka.value ? store.getStatusZalijevanja(biljka.v
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: fit-content;
 }
 
 .status-box p {
@@ -146,10 +139,4 @@ const status = computed(() => biljka.value ? store.getStatusZalijevanja(biljka.v
   border-radius: 20px;
   font-weight: 500;
 }
-
-.status-zdravo { background: #eaf3de; color: #3b6d11; }
-.status-uskoro { background: #fef9c3; color: #854d0e; }
-.status-danas { background: #faeeda; color: #854f0b; }
-.status-kasni { background: #fee2e2; color: #dc2626; }
-.status-pazi { background: #f3f4f6; color: #6b7280; }
 </style>

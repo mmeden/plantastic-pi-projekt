@@ -8,10 +8,10 @@ const pretraga = ref('')
 
 const filtriraneBiljke = computed(() => {
   const q = pretraga.value.toLowerCase().trim()
-  if (!q) return store.katalog
-  return store.katalog.filter(b =>
-    b.naziv.toLowerCase().includes(q) || b.vrsta.toLowerCase().includes(q)
-  )
+  const lista = q
+    ? store.katalog.filter(b => b.naziv.toLowerCase().includes(q) || b.vrsta.toLowerCase().includes(q))
+    : [...store.katalog]
+  return lista.sort((a, b) => a.naziv.localeCompare(b.naziv))
 })
 
 function jeVecDodana(id) {
@@ -74,18 +74,6 @@ function dodaj(biljka) {
 </template>
 
 <style scoped>
-.stranica {
-  min-height: 100vh;
-  background: #faf8f5;
-  font-family: sans-serif;
-}
-
-.sadrzaj {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 40px 24px;
-}
-
 .uvod {
   margin-bottom: 24px;
 }
@@ -124,12 +112,6 @@ function dodaj(biljka) {
   font-size: 14px;
   color: #888780;
   margin-bottom: 24px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
 }
 
 .kartica {
@@ -175,13 +157,6 @@ function dodaj(biljka) {
   margin: 0;
 }
 
-.opis {
-  font-size: 12px;
-  color: #5f5e5a;
-  margin: 4px 0 8px;
-  line-height: 1.5;
-}
-
 .btn-dodaj {
   width: 100%;
   padding: 8px;
@@ -201,5 +176,11 @@ function dodaj(biljka) {
 .btn-dodana {
   background: #888780;
   cursor: default;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
 }
 </style>
