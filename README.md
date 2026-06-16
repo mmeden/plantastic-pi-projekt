@@ -51,8 +51,7 @@ Plantastic je web aplikacija namijenjena ljubiteljima sobnih biljaka koji žele 
 
 ---
 
-
- [Figma prototip]([https://www.figma.com/...](https://www.figma.com/proto/iAQlVu0UJCX808nikHsdcE/Untitled?node-id=0-3&p=f&t=x8kHfypeojxYHiNn-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=0%3A176))
+> [Figma prototip](https://www.figma.com/proto/iAQlVu0UJCX808nikHsdcE/Untitled?node-id=0-3&p=f&t=x8kHfypeojxYHiNn-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=0%3A176)
 
 ---
 
