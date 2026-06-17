@@ -2,7 +2,9 @@
 import PlantSlikice from '@/components/PlantSlikice.vue'
 import NavBar from '@/components/NavBar.vue'
 import { useBiljkeStore } from '@/stores/biljke'
+import { useAuthStore } from '@/stores/auth'
 
+const auth = useAuthStore()
 const store = useBiljkeStore()
 </script>
 
@@ -26,7 +28,7 @@ const store = useBiljkeStore()
 
         <div class="grid" v-else>
           <div v-for="biljka in [...store.mojeBiljke].sort((a, b) => a.naziv.localeCompare(b.naziv))" :key="biljka.id" class="kartica-wrapper">
-            <button class="btn-ukloni" @click="store.ukloniBiljku(biljka.id)">✕</button>
+            <button class="btn-ukloni" @click="store.ukloniBiljku(auth.korisnik.uid, biljka.id)">✕</button>
             <RouterLink :to="`/biljka/${biljka.id}`" style="text-decoration:none;">
               <PlantSlikice :plant="biljka" />
             </RouterLink>

@@ -2,7 +2,9 @@
 import { ref, computed } from 'vue'
 import { useBiljkeStore } from '@/stores/biljke'
 import NavBar from '@/components/NavBar.vue'
+import { useAuthStore } from '@/stores/auth'
 
+const auth = useAuthStore()
 const store = useBiljkeStore()
 const pretraga = ref('')
 
@@ -19,7 +21,7 @@ function jeVecDodana(id) {
 }
 
 function dodaj(biljka) {
-  store.dodajBiljku(biljka)
+  store.dodajBiljku(auth.korisnik.uid, biljka)
 }
 </script>
 

@@ -3,13 +3,14 @@ import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useBiljkeStore } from '@/stores/biljke'
 import NavBar from '@/components/NavBar.vue'
+import { useAuthStore } from '@/stores/auth'
 
-
+const auth = useAuthStore()
 const route = useRoute()
 const router = useRouter()
 const store = useBiljkeStore()
 
-const biljka = computed(() => store.mojeBiljke.find(b => b.id === Number(route.params.id)))
+const biljka = computed(() => store.mojeBiljke.find(b => b.id === route.params.id))
 const povijest = computed(() => store.getPovijest(Number(route.params.id)))
 const status = computed(() => biljka.value ? store.getStatusZalijevanja(biljka.value) : null)
 
@@ -21,7 +22,7 @@ const mozeSEvidentirat = computed(() => {
 
 function evidentirajZalijevanje() {
   if (!mozeSEvidentirat.value) return
-  store.evidentirajZalijevanje(Number(route.params.id))
+  store.evidentirajZalijevanje(auth.korisnik.uid, route.params.id)
 }
 </script>
 

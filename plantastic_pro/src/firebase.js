@@ -3,12 +3,12 @@ import { getAuth } from "firebase/auth"
 import { getFirestore } from "firebase/firestore"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAkQN6WnaaqZfih_zekQwYOF63n0CKbwnA",
-  authDomain: "plantastic-6b162.firebaseapp.com",
-  projectId: "plantastic-6b162",
-  storageBucket: "plantastic-6b162.firebasestorage.app",
-  messagingSenderId: "1075574122046",
-  appId: "1:1075574122046:web:6fdfb2895674d18621536f"
+  apiKey: "AIzaSyC9u2ez7s1HvSlMUfc82SjZf-7jLJAKWCc",
+  authDomain: "plantastic2.firebaseapp.com",
+  projectId: "plantastic2",
+  storageBucket: "plantastic2.firebasestorage.app",
+  messagingSenderId: "960356084256",
+  appId: "1:960356084256:web:4b050f48018dcef7d0ea45"
 }
 
 const app = initializeApp(firebaseConfig)

@@ -8,7 +8,7 @@ const route = useRoute()
 const router = useRouter()
 const store = useBiljkeStore()
 
-const biljka = computed(() => store.mojeBiljke.find(b => b.id === Number(route.params.id)))
+const biljka = computed(() => store.mojeBiljke.find(b => b.id === route.params.id))
 const status = computed(() => biljka.value ? store.getStatusZalijevanja(biljka.value) : null)
 </script>
 
