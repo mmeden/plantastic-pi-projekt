@@ -2,8 +2,7 @@
 
 Web aplikacija za praćenje njege sobnih biljaka.
 
-
-## Izradila: Mia Meden
+Izradila: Mia Meden
 
 
 ---
@@ -44,9 +43,8 @@ Plantastic je web aplikacija namijenjena ljubiteljima sobnih biljaka koji žele 
 
 ---
 
-## Javni prototip
 
-> Link na prototip: _u izradi_
+> [Javni prototip](https://plantastic-pi-projekt.vercel.app)
 
 ---
 
@@ -63,3 +61,19 @@ Plantastic je web aplikacija namijenjena ljubiteljima sobnih biljaka koji žele 
 **Korisnik:**
 - Email: `korisnik@plantastic.com`
 - Lozinka: `korisnik123`
+
+# Project Setup
+ 
+```
+git clone https://github.com/mmeden/plantastic-pi-projekt.git
+cd plantastic-pi-projekt/plantastic_pro
+npm install
+```
+ 
+# Compile and Hot-Reload for Development
+ 
+```
+npm run dev
+```
+ 
+Aplikacija će se otvoriti na [localhost](http://localhost:5173)
