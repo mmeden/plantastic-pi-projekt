@@ -19,7 +19,7 @@ const opis = ref('')
 const slika = ref('')
 const greska = ref('')
 const uspjeh = ref('')
-const intervalOptions = [2, 3, 5, 7, 10, 14, 21]
+const intervalOptions = [3, 5, 7, 10, 14, 21]
 const intervalZalijevanja = ref(7)
 const uredivanje = ref(null)
 

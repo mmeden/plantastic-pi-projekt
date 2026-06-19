@@ -86,16 +86,8 @@ function promijeniNacin(novi) {
       </div>
 
       <div class="tab-switcher">
-        <button
-          class="tab"
-          :class="{ active: nacin === 'prijava' }"
-          @click="promijeniNacin('prijava')"
-        >Prijava</button>
-        <button
-          class="tab"
-          :class="{ active: nacin === 'registracija' }"
-          @click="promijeniNacin('registracija')"
-        >Registracija</button>
+        <button class="tab" :class="{ active: nacin === 'prijava' }" @click="promijeniNacin('prijava')" >Prijava</button>
+        <button class="tab" :class="{ active: nacin === 'registracija' }" @click="promijeniNacin('registracija')" >Registracija</button>
       </div>
 
       <div class="form">

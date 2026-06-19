@@ -18,7 +18,7 @@ const router = useRouter()
       <RouterLink to="/admin" class="nav-link">Admin panel</RouterLink>
     </div>
     <div class="nav-desno">
-      <span v-if="auth.jeAdmin" class="admin-badge">👑 Admin</span>
+      
       <span class="korisnik-ime">👤 {{ auth.korisnik?.ime }}</span>
       <button class="btn-odjava" @click="auth.odjava(); router.push('/login')">Odjava</button>
     </div>

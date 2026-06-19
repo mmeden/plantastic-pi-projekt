@@ -35,24 +35,14 @@ function dodaj(biljka) {
         <p>Pretraži katalog i dodaj biljke u svoju kolekciju.</p>
       </div>
 
-      <input
-        v-model="pretraga"
-        type="text"
-        placeholder="Pretraži po imenu ili vrsti..."
-        class="pretraga"
-      />
+      <input v-model="pretraga" type="text" placeholder="Pretraži po imenu ili vrsti..." class="pretraga" />
 
       <p v-if="filtriraneBiljke.length === 0" class="nema">
         Nema biljki za "{{ pretraga }}"
       </p>
 
       <div class="grid">
-        <div
-          v-for="biljka in filtriraneBiljke"
-          :key="biljka.id"
-          class="kartica"
-          :class="{ dodana: jeVecDodana(biljka.id) }"
-        >
+        <div v-for="biljka in filtriraneBiljke" :key="biljka.id" class="kartica" :class="{ dodana: jeVecDodana(biljka.id) }" >
           <div class="slika-wrapper">
             <img :src="biljka.slika" :alt="biljka.naziv" class="slika" />
           </div>

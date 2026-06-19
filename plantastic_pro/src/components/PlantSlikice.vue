@@ -1,3 +1,19 @@
+<script setup>
+import { computed } from 'vue'
+import { useBiljkeStore } from '@/stores/biljke'
+
+const props = defineProps({
+  plant: {
+    type: Object,
+    required: true
+  }
+})
+
+const store = useBiljkeStore()
+const status = computed(() => store.getStatusZalijevanja(props.plant))
+</script>
+
+
 <template>
   <div class="plant-card">
     <div class="plant-image-wrapper">
@@ -13,20 +29,7 @@
   </div>
 </template>
 
-<script setup>
-import { computed } from 'vue'
-import { useBiljkeStore } from '@/stores/biljke'
 
-const props = defineProps({
-  plant: {
-    type: Object,
-    required: true
-  }
-})
-
-const store = useBiljkeStore()
-const status = computed(() => store.getStatusZalijevanja(props.plant))
-</script>
 
 <style scoped>
 .plant-card {

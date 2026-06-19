@@ -20,12 +20,7 @@ const store = useBiljkeStore()
       </div>
 
       <div class="grid" v-else>
-        <RouterLink
-  v-for="biljka in [...store.mojeBiljke].sort((a, b) => a.naziv.localeCompare(b.naziv))"
-  :key="biljka.id"
-  :to="`/evidencija/${biljka.id}`"
-  class="kartica"
->
+        <RouterLink v-for="biljka in [...store.mojeBiljke].sort((a, b) => a.naziv.localeCompare(b.naziv))" :key="biljka.id" :to="`/evidencija/${biljka.id}`" class="kartica" >
           <div class="slika-wrapper">
             <img :src="biljka.slika" :alt="biljka.naziv" class="slika" />
           </div>

@@ -46,12 +46,7 @@ function evidentirajZalijevanje() {
             <div class="status-red">
               <span class="status-badge" :class="status.klasa">💧 {{ status.tekst }}</span>
             </div>
-            <button
-              class="btn-zalij"
-              @click="evidentirajZalijevanje"
-              :disabled="!mozeSEvidentirat"
-              :class="{ 'btn-disabled': !mozeSEvidentirat }"
-            >
+            <button class="btn-zalij" @click="evidentirajZalijevanje" :disabled="!mozeSEvidentirat" :class="{ 'btn-disabled': !mozeSEvidentirat }" >
               {{ mozeSEvidentirat ? 'Evidentiraj zalijevanje' : 'Još nije vrijeme za zalijevanje' }}
             </button>
           </div>
